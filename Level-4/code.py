@@ -95,7 +95,7 @@ class DB_CRUD_ops(object):
                 # res += "[SANITIZED_QUERY]" + sanitized_query + "\n"
                 res += "CONFIRM THAT THE ABOVE QUERY IS NOT MALICIOUS TO EXECUTE"
             else:
-                cur.execute(query)
+                cur.execute("SELECT * FROM stocks WHERE symbol = ?", (stock_symbol, ))
                 
                 query_outcome = cur.fetchall()
                 for result in query_outcome:
