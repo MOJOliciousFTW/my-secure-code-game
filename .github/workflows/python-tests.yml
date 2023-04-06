@@ -42,3 +42,6 @@ jobs:
         run: |
           python Level-4/tests.py
           python Level-4/hack.py
+      - name: Test Level-5
+        run: |
+          python Level-5/tests.py
