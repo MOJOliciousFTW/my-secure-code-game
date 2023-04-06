@@ -1,5 +1,3 @@
 pyOpenSSL
-secrets
-bcrypt
 flask
 werkzeug
