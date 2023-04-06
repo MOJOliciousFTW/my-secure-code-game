@@ -1,4 +1,4 @@
-'''
+"""
 ////////////////////////////////////////////////////////////
 ///                                                      ///
 ///   0. tests.py is passing but the code is vulnerable  /// 
@@ -9,14 +9,16 @@
 ///   5. Compare your solution with solution.py          ///
 ///                                                      ///
 ////////////////////////////////////////////////////////////
-'''
+"""
 
 from dataclasses import dataclass
+
 
 @dataclass
 class Order:
     id: str
     items: list
+
 
 @dataclass
 class Item:
@@ -25,18 +27,19 @@ class Item:
     amount: float
     quantity: int
 
+
 def validorder(order: Order):
-    net = 0 # net amount paid in cents
+    net = 0  # net amount paid in cents
 
     for item in order.items:
-        if item.type == 'payment':
-            net += int(100*item.amount)
-        elif item.type == 'product':
-            net -= int(100*item.amount * item.quantity)
+        if item.type == "payment":
+            net += int(100 * item.amount)
+        elif item.type == "product":
+            net -= int(100 * item.amount * item.quantity)
         else:
-            return("Invalid item type: %s" % item.type)
+            return "Invalid item type: %s" % item.type
 
     if net != 0:
-        return("Order ID: %s - Payment imbalance: $%0.2f" % (order.id, net/100))
+        return "Order ID: %s - Payment imbalance: $%0.2f" % (order.id, net / 100)
     else:
-        return("Order ID: %s - Full payment received!" % order.id)
+        return "Order ID: %s - Full payment received!" % order.id
