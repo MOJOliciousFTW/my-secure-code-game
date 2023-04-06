@@ -26,17 +26,17 @@ class Item:
     quantity: int
 
 def validorder(order: Order):
-    net = 0
-    
+    net = 0 # net amount paid in cents
+
     for item in order.items:
         if item.type == 'payment':
-            net += item.amount
+            net += int(100*item.amount)
         elif item.type == 'product':
-            net -= item.amount * item.quantity
+            net -= int(100*item.amount * item.quantity)
         else:
             return("Invalid item type: %s" % item.type)
-    
+
     if net != 0:
-        return("Order ID: %s - Payment imbalance: $%0.2f" % (order.id, net))
+        return("Order ID: %s - Payment imbalance: $%0.2f" % (order.id, net/100))
     else:
         return("Order ID: %s - Full payment received!" % order.id)
