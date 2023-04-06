@@ -1,4 +1,4 @@
-name: CI
+name: python-tests
 
 on:
   push:
@@ -34,3 +34,7 @@ jobs:
         run: |
           python Level-1/tests.py
           python Level-1/hack.py
+      - name: Test Level-3
+        run: |
+          python Level-3/tests.py
+          python Level-3/hack.py
