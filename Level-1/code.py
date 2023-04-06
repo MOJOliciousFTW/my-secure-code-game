@@ -11,10 +11,19 @@
 ////////////////////////////////////////////////////////////
 '''
 
-from collections import namedtuple
+from dataclasses import dataclass
 
-Order = namedtuple('Order', 'id, items')
-Item = namedtuple('Item', 'type, description, amount, quantity')
+@dataclass
+class Order:
+    id: str
+    items: list
+
+@dataclass
+class Item:
+    type: str
+    description: str
+    amount: float
+    quantity: int
 
 def validorder(order: Order):
     net = 0
