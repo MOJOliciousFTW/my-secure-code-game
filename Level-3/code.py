@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request  
+from flask import Flask, request
+import werkzeug  
 
 ### Unrelated to the exercise -- Starts here -- Please ignore
 app = Flask(__name__)
@@ -8,6 +9,13 @@ def source():
     TaxPayer('foo', 'bar').get_tax_form_attachment(request.args["input"])
     TaxPayer('foo', 'bar').get_prof_picture(request.args["input"])
 ### Unrelated to the exercise -- Ends here -- Please ignore
+
+def get_fullpath(path):
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.basename(os.path.normpath(path))
+    secure_filename = werkzeug.utils.secure_filename(filename)
+
+    return os.path.normpath(os.path.join(base_dir + '/assets/', secure_filename))
 
 class TaxPayer:
     
@@ -28,11 +36,13 @@ class TaxPayer:
             return None
         
         # builds path
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        prof_picture_path = os.path.normpath(os.path.join(base_dir, path))
-    
-        with open(prof_picture_path, 'rb') as pic:
-            picture = bytearray(pic.read())
+        prof_picture_path = get_fullpath(path)
+        try:
+            with open(prof_picture_path, 'rb') as pic:
+                picture = bytearray(pic.read())
+        except FileNotFoundError as err:
+            print(err)
+
 
         # assume that image is returned on screen after this
         return prof_picture_path
@@ -43,9 +53,13 @@ class TaxPayer:
         
         if not path:
             raise Exception("Error: Tax form is required for all users")
-       
-        with open(path, 'rb') as form:
-            tax_data = bytearray(form.read())
+
+        tax_form_path = get_fullpath(path)
+        try:
+            with open(tax_form_path, 'rb') as form:
+                tax_data = bytearray(form.read())
+        except FileNotFoundError as err:
+            print(err)
 
         # assume that taxa data is returned on screen after this
         return path
